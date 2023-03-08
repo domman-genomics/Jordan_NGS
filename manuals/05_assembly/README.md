@@ -1,4 +1,4 @@
-# Bacterial genome assembly using Mycobacterium tuberculosis example dataset
+# Bacterial genome assembly and annotation using Mycobacterium tuberculosis example dataset
 
 
 ## Table of contents
@@ -8,84 +8,29 @@
 4. [Commands for running assemblies](#exercise3)
 
 ## 1. Introduction <a name="introduction"></a>
+Genome assembly involves piecing together short fragments of DNA sequence (called reads) into longer contiguous sequences (called contigs) or scaffolds to reconstruct the original genome. This is typically done when a reference genome is not available or when there are significant differences between the genome being studied and the available reference genome. In genome assembly, the reads are analyzed de novo, without relying on a pre-existing reference genome. As a result, genome assembly can provide a more comprehensive view of the genome, including regions that may be absent or divergent in the reference genome.
 
-In this module, we are going to work through how to generate SARS-CoV-2 consensus genomes from Oxford Nanopore data. The most popular pipeline for this is called ARTIC.
+**SPAdes** (St. Petersburg genome assembler) is a popular genome assembly software that is commonly used for bacterial genome assembly. SPAdes works by building de Bruijn graphs from the sequencing reads, and then using these graphs to assemble the genome into contigs (short, contiguous sequences of DNA).  
 
-You can find more information here:  
+**SKESA** (Shovill-Kraken-Excise-Scaffolding-Alignment) is another popular bacterial genome assembly tool that is gaining in popularity due to its speed and accuracy. SKESA is a hybrid assembler that uses both de Bruijn graph and overlap-layout-consensus (OLC) algorithms to assemble the genome.  
 
-`ARTIC` : https://github.com/artic-network/fieldbioinformatics 
-
+In this module, we will look at assemblies of our two *M. tuberculosis* datasets that we have been working with. We will then annotate these assemblies using a tool called `prokka`.
 
 ### We will
 
-- [X] Use `git` to pull data from a github account
 - [X] Compare assembly methods using `quast`
 - [X] Use `prokka` to annotate genomes
 - [x] Learn the assembly commands for SKESA and Spades
 
-#### First we need to download the assembly datasets that I have run
-
-```bash
-cd Oman_modules
-git pull
-```
-![](figures/assemb_3.png)
-
-Check to see we now have an assembly folder:
-```bash
-ll
-```
-![](figures/assemb_4.png)
-
-#### Now move the `assemblies` folder to our `TB_module` folder:
-```bash
-mv assemblies/ ../TB_module/.
-cd ../TB_module
-ls
-```
-You should see the `assemblies` folder in now in the `TB_module` folder.
-
-![](figures/assemb_5.png)
-
-### We are now ready to use quast to compare the assemblies
 
 ## Compare assemblies using Quast <a name="exercise1"></a>
-First move into the TB dataset assemblies folder we just downloaded:
+First move into the TB dataset assemblies folder:
 ```bash
-cd assemblies
-
+cd ~/modules/assemblies
 ```
+As the bacterial assembly steps can take quite a while, we have provided the completed assemblies here for us to examine. You will find the commands used to generate these assemblies at the end of the module.
 
-
-#### We need to install `Quast` by creating a new conda environments
-
-We will be using a program called Quast to assess the quality of assemblies : https://github.com/ablab/quast  
-
-Install `mamba` by using the following command:
-```bash
-mamba create -n quast -y -c conda-forge -c bioconda quast
-```
-`mamba create` : command that creates a new environment
-`-n quast` : create new environment called quast
-`-c conda-forge`: adds conda-forge channel  
-`-c bioconda`: adds bioconda channel  
-`quast` : installs quast package
-
-Once it has finished installing you can now activate the environment by typing:
-```bash
-conda activate quast
-```
-
-
-
-Check quast is installed properly and get an idea of how to run the program:
-```bash
-quast -h
-```
-This should do the trick, and everything should work now.
-![](figures/assemb_1.png)
-
-#### Run quast on our assemblies:
+## 1. Run quast on our assemblies:
 
 Quast usage is as follows:
 `quast [options] <contig files>`
@@ -93,13 +38,12 @@ Quast usage is as follows:
 Contig files are the `.fasta` or `.fa` files produced by assembly programs   
 
 ```bash
-quast -l skesa_TB1,skesa_TB2,spades_TB1,spades_TB2  skesa_TBsample1.fasta skesa_TBsample2.fasta spades_TBsample1_contigs.fa spades_TBsample2_contigs.fa
+quast -l skesa_TB1,skesa_TB2,spades_TB1,spades_TB2 skesa_TBsample1.fasta skesa_TBsample2.fasta spades_TBsample1_contigs.fa spades_TBsample2_contigs.fa
 ```
-
 
 `-l` : you can rename what the assembly dataset is called here. We do this to make it easier when we are looking at the results instead of long names  
 
-##### Use firefox to look at the output files:
+#### **Use firefox to look at the output files:
 ```bash
 firefox quast_results/latest/report.html
 ```
@@ -119,14 +63,32 @@ There are a number of useful metrics reported by Quast on each assembly:
 
 ![](figures/assemb_2.png)
 
-#### You can also run quast using a reference genome which can give more insight into the differences between the assemblies:
+## 2. Run quast using a reference genome 
+
+Comparing our assemblies against the reference genome can give more insight into the differences between the assemblies.
 ```bash
 quast -r reference.fa -g reference.gff -l skesa_TB1,skesa_TB2,spades_TB1,spades_TB2 skesa_TBsample1.fasta skesa_TBsample2.fasta spades_TBsample1_contigs.fa spades_TBsample2_contigs.fa
 
 firefox quast_results/latest/report.html
 ```
+Quast now provides some additional information when we compare to our reference genome. 
 
-## 2. Run `prokka` to annotate genomes <a name="exercise2"></a>
+![](figures/assemb_11.png)
+
+You can hover over each of the reported statistics to see a description. 
+
+***Questions***
+1. Are our genomes complete compared to the reference? (Check Genome fraction)
+2. Which assemblies have the most identified misassemblies?
+3. Do you notice a trend between the assemblers?
+
+`SKESA` tends to be more conservative and produces more accurate assemblies, but the assembly is more fragmented (ie more contigs). `Spades` tends to produce longer contigs, but this comes at a cost of sometimes misassembling. 
+
+## 3. Genome annotation with `prokka` <a name="exercise2"></a>
+`Prokka` is a software tool used for rapid and automated annotation of bacterial and archaeal genomes. It is designed to be user-friendly, with a simple command-line interface, and is capable of producing rich annotation output in a range of standard formats.
+
+The `Prokka` annotation pipeline involves several steps. First, it predicts the coding sequences (CDSs) in the genome using a combination of ab initio gene prediction and homology-based methods. It also predicts non-coding RNAs (ncRNAs), transfer RNAs (tRNAs), and ribosomal RNAs (rRNAs). Next, it annotates the predicted CDSs and other features with functional information, including gene names, product descriptions, EC numbers, and Gene Ontology (GO) terms, using a range of external databases and tools. Finally, it generates summary statistics and output files in various formats, including GenBank, GFF, and EMBL.
+
 
 `Prokka` is a very popular (probably the most) bacterial annotation tool. You can read more about it here : https://github.com/tseemann/prokka
 
@@ -140,9 +102,18 @@ conda activate annotate
 
 #### Now run `prokka`
 ```bash
-prokka --cpus 4 --proteins ../Mtb_H37Rv.gb --outdir skesa_TB1 --prefix TB1_skesa skesa_TBsample1.fasta
-prokka --cpus 4 --proteins ../Mtb_H37Rv.gb --outdir skesa_TB2 --prefix TB2_skesa skesa_TBsample2.fasta
+prokka --cpus 4 --proteins ../TB_module/Mtb_H37Rv.gb --outdir skesa_TB1 --prefix TB1_skesa skesa_TBsample1.fasta  
+
+prokka --cpus 4 --proteins ../TB_module/Mtb_H37Rv.gb --outdir skesa_TB2 --prefix TB2_skesa skesa_TBsample2.fasta
 ```
+In this command:
+
+`--cpus` specify the number of cores  
+`--proteins` uses the annotations from the reference genome  
+`--outdir` specifies the output directory where Prokka will write its results.  
+`--prefix` changes the output file name (default is full input file name)   
+The last position in the command is our input fasta file (our assembly)
+
 
 #### There are many output files produced by prokka:
 #### Output Files
@@ -162,16 +133,16 @@ prokka --cpus 4 --proteins ../Mtb_H37Rv.gb --outdir skesa_TB2 --prefix TB2_skesa
 | .txt | Statistics relating to the annotated features found. |
 | .tsv | Tab-separated file of all features: locus_tag,ftype,len_bp,gene,EC_number,COG,product |
 
-The GenBank `.gbk` file is one of the main outputs that is usefull for downstream applications, as is the `.gff` file.
+
+### The GenBank `.gbk` file is one of the main outputs that is useful for downstream applications, as is the `.gff` file.
 
 
-## 3. Viewing assemblies in genome browser
+## 4. Viewing assemblies in genome browser
 
 You can take an interactive look at your genomes by using one of several interactive genome browsers. My personal favorite is `artemis`, but another popular one is `IGV`.
 
 You can load your annotated genome for viewing in Artemis like so:
 ```bash
-conda activate base
 art skesa_TB1/TB1_skesa.gff
 ```
 When you first start this up an annoying box will appear telling you Artemis is complaining about something and that there are warnings. In this case hit the `NO` button.
@@ -193,14 +164,14 @@ For instance, if we wanted to find the `gyrB` gene you can search for it as foll
 ![](figures/assemb_10.png)
 
 
-A full in-depth review of Artemis is just not possible within our 90 minutes, but you can look at a module from a course that I have taught on for a numner of years for more background : https://github.com/domman-genomics/WWPG_2022/blob/main/manuals/module_artemis/module_artemis.md
+For more details on using Artemis: https://github.com/domman-genomics/WWPG_2022/blob/main/manuals/module_artemis/module_artemis.md
 
 
-# 4. Commands for running bacterial genome assembly <a name="exercise3"></a>
+# 5. Commands for running bacterial genome assembly <a name="exercise3"></a>
 
 ## You do **not** need to run these commands! They are here for informational purposes.
 
-Two very popular bacterial genome assembly programs are `SKESA` and `Spdaes`. A popular tool for running spades assemblies is called `shovill` which is what we are using here.
+Two very popular bacterial genome assembly programs are `SKESA` and `Spdaes`. A popular pipeline for running spades assemblies is called `shovill` which is what we are using here.
 
 You can find more information here:  
 

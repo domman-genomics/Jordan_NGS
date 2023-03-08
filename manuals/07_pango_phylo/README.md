@@ -8,18 +8,15 @@
 
 ## 1. Introduction <a name="introduction"></a>
 
-In this module, we are continuing our SARS-CoV-2 module from last week. This week we will assign Pangolin and NextClade lineages to our sequences. We will also then merge our data with a subset of globally sampled genomes, align these sequences using `mafft` and then create a phylogeny so that we can identify relationships between isolates.
+In this module, we are continuing our SARS-CoV-2 module with nanopore data. Here, we will assign Pangolin and NextClade lineages to our sequences. We will also then merge our data with a subset of globally sampled genomes, align these sequences using `mafft` and then create a phylogeny so that we can identify relationships between isolates.
 
 
 #### Navigate to our SARS_CoV-2 folder:
 
 ```bash
-cd Oman_modules
-git pull
-cd SARS_CoV-2
-ls
+cd ~/modules/SARS_CoV-2/Nanopore_data
 ```
-![](figures/fig_01.png)
+
 
 Recall the output files from the ARTIC pipeline we ran last module. We are particularly interested in the consensus genome files produced. You can see those files specifically by using the `*` trick like so :
 
@@ -43,8 +40,7 @@ grep -c ">" all.consensus.fasta
 `-c` = count the number of matches  
 Here we are searching for matches to `>`, which is at the start of every fasta entry  
 
-![](figures/fig_05.png)
-
+____
 
 ## 1. Running Pangolin<a name="exercise1"></a>
 
@@ -54,9 +50,8 @@ Pangolin has become the default tool for assigning lineages for SARS-CoV-2. You 
 #### First we install `pangolin` using `mamba`:
 
 ```bash
-mamba create --name pango
-mamba activate pango
-mamba install -c conda-forge -c bioconda -c defaults pangolin
+mamba create -n pango -c conda-forge -c bioconda pangolin
+conda activate pango
 ```
 
 Check that the installation worked:
@@ -64,13 +59,13 @@ Check that the installation worked:
 pangolin -v
 pangolin -pv
 ```
-As new lineages and variants arise, pangolin must be updated regularly. To update run:
-```bash
-pangolin --update
+### Make sure we have latest pangolin data:
 ```
-![](figures/fig_04.png)
+pangolin --update
+pangolin --update_data
+```
 
-#### Run `pangolin` on our consensus genomes:
+#### **Run `pangolin` on our consensus genomes:**
 ```bash
 pangolin all.consensus.fasta
 ```
@@ -124,7 +119,7 @@ We can check it installed correctly and learn how to use the tool:
 ```bash
 nextclade --help
 ```
-![](figures/fig_09.png)
+
 
 ### Download the NextClade SARS-CoV-2 dataset
 ```bash
@@ -133,19 +128,14 @@ nextclade dataset get --name 'sars-cov-2' --output-dir 'data/sars-cov-2'
 
 ### Now we are ready to run the analysis:
 ```bash
-nextclade \
-   --in-order \
-   --input-fasta all.consensus.fasta \
-   --input-dataset data/sars-cov-2 \
-   --output-tsv output/nextclade.tsv \
-   --output-tree output/nextclade.auspice.json \
-   --output-dir output/ \
-   --output-basename nextclade
+nextclade run --output-all=nextclade_result --input-dataset data/sars-cov-2 all.consensus.fasta
 ```
 
-The `--input-fasta` flag is where we specify our input fasta file. We do not need to change the other options.
+The `--input-dataset` flag is where we specify the dataset we just downloaded above.
 
-The output of the command we specified will be placed in a new folder called `output`, using the `--output-dir` flag.
+The output of the command we specified will be placed in a new folder called `nextclade_output`, using the `--output-all` flag.
+
+The last positional argument in the input fasta file.
 
 ### Viewing the results of NextClade
 I think it is easiest to view this using Excel or equivalent. Open it as we did the pango results.

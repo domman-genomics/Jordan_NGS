@@ -11,21 +11,28 @@
 
 The goal of this exercise is look at basic QC data from Illumina sequencing reads and to use a trimming tool to remove adapter sequences and poor quality bases. Our dataset are two *M. tuberculosis* samples that have been sequenced via Illumina paired-end. We will be using this data for this module and the next to focus on the basics of data QC and for mapping reads to a reference genome.
 
-### We will
+We trim and perform quality control (QC) on sequencing data to ensure that the resulting data is of high quality and reliable for downstream analysis. Here are a few reasons why trimming and QC are important:
+
+1. Removal of low-quality reads: Sequencing data can be noisy, with errors and artifacts introduced during library preparation, sequencing, and data processing. Low-quality reads can have a negative impact on downstream analysis, leading to inaccurate results and reduced sensitivity. Trimming and QC can remove low-quality reads, which improves the quality of the data and increases the accuracy of downstream analysis.
+
+2. Removal of adapter sequences: Adapters are short DNA fragments used during library preparation to enable sequencing of the target DNA. However, they can sometimes remain attached to the sequencing data, leading to false positives and incorrect mapping. Trimming adapter sequences ensures that only the target DNA is used for downstream analysis.
+
+### In this module we will
 
 - [X] Learn how to run `fastqc` on Illumina reads
 - [X] Use `multiqc` to combine and visualize multiple `fastqc` reports
-- [x] Learn how to create a new `conda` environment
-- [x] Use `trim_galore` to trim Illimina fastq data
+- [x] Use `trim_galore` to trim Illumina fastq data
 
 First move into the TB dataset folder:
 ```bash
-cd TB_module
+cd modules/TB_module
 ```
 If you list the contents of this directory `ll` it should appear like the following:
 ![](figures/TB_fig1.png)
 
-We are working with two samples that have been sequenced with Illumina via paired-end sequencing. Therefore, each sample has a forward and reverse read. The forward read is usually denoted by  `SAMPLE-NAME_1.fastq.gz` and the reverse is usually denoted by `SAMPLE-NAME_2.fastq.gz`
+We are working with two samples that have been sequenced with Illumina via paired-end sequencing. Therefore, each sample has a forward and reverse read.   
+The forward read is usually denoted by  `SAMPLE-NAME_1.fastq.gz`  
+The reverse is usually denoted by `SAMPLE-NAME_2.fastq.gz`
 
  [↥ **Back to top**](#top)
 
@@ -90,7 +97,7 @@ Sequences with poor quality scores across the read are colored red.
 
 ![](figures/TB_fig7.png)
 
-##### *Questions*
+## *Questions*
 1. Which sample has good quality scores?
 2. Which sample has bad?
 3. What is happening at the end of the reads in terms of quality?
@@ -100,7 +107,7 @@ A related plot is the per sequence quality scores histogram which gives the tota
 ![](figures/TB_fig8.png)
 
 ### GC histogram
-Another important plot is to look at the mean GC content of the reads. This plot often gives us an indication of whether or not we have contamination. If you are sequencing a single organism in your sample(s), the GC content should follow a normal 'bell' distribution. If there happened to be contaminating DNA from another organism it will likely have a slightly different mean GC and this shows up a 'bump' in the distribution.
+Another important plot to look at the mean GC content of the reads. This plot often gives us an indication of whether or not we have contamination. If you are sequencing a single organism in your sample(s), the GC content should follow a normal 'bell' distribution. If there happened to be contaminating DNA from another organism, it will likely have a slightly different mean GC and this shows up a 'bump' in the distribution.
 ![](figures/TB_fig9.png)
 
 
@@ -116,30 +123,14 @@ There are other useful plots and analyses that are in the  fastQC / multiQC repo
 
  ******
 ## Trimming reads with trim_galore <a name="exercise2"></a>
+`trim_galore` is a popular bioinformatics tool used for trimming and quality control of sequencing reads. It is designed to process reads from Illumina sequencing platforms, but can also handle reads from other platforms.
 
-Next, we will be using the  tool **trim_galore** to trim (ie remove) poor quality data and contaminating adapter sequences. `trim_galore` takes about 10 minutes to finish per dataset.
+We will be using the  tool **trim_galore** to trim (ie remove) poor quality data and contaminating adapter sequences. `trim_galore` takes a few minutes to finish per dataset.
 
 `Trim Galore` is a tool that runs the program `cutadapt` and `fastQC`. You can find more information about these tools here:
 1. `Trim Galore` : <https://github.com/FelixKrueger/TrimGalore/blob/master/Docs/Trim_Galore_User_Guide.md>
 2. `cutadapt`: <https://cutadapt.readthedocs.io/en/stable/>
 
-### Using `conda` to install and download tools <a name="conda"></a>
-First we will use `conda` to install the `trim_galore` program. `conda` is a package management tool that allows one to create different "environments" and takes the pain out of downloading software. I have already installed `conda` but you can find the details how I did this here : <https://docs.conda.io/en/latest/miniconda.html>
-
-Please run:
-```bash
-conda create --yes -n qc -c bioconda -c conda-forge python=3.8 trim-galore fastqc multiqc
-```
-This creates a new environment called 'qc' and installs the programs `trim_galore` , `fastqc`, `multiqc` and `python3.8`
-
-You activate the new environment with the command:
-
-```bash
-conda activate qc
-```
-![](figures/TB_fig10.png)
-
-Now we are able to use `trim_galore` to process the fastq file for each of the TB samples.
 
 **Run trim_galore on Sample 1**
 ```bash
@@ -150,7 +141,7 @@ This command has several options that we used:
 `--paired` : let's the program know we have paired-end data  
 `--fastqc` : automatically runs `fastQC` when finished
 
-**!!! This step is going to take around 10 minutes to finish. While waiting please go to [Download Reference Genome](#exercise3) section.**
+While waiting please go to [Download Reference Genome](#exercise3) section.
 
 When finished `trim_galore` produces the following files **per fastq file**:
 
@@ -162,11 +153,11 @@ When finished `trim_galore` produces the following files **per fastq file**:
 | _val_1_fastqc.html     | fastqc results from trimmed fastq that can be viewed in web browser
 
 
-### Now run `trim_galore` for the second sample:
+
+### **Now run `trim_galore` for the second sample:**
 ```bash
 trim_galore --cores 4 --paired --fastqc TBsample2_1.fastq.gz TBsample2_2.fastq.gz
-```
-**This will take around 10 minutes to complete.**  
+``` 
 
 Use this time to look over the `fastQC` html files or the `multiQC` html files we have already generated and see if there are any questions.
 
@@ -188,11 +179,11 @@ firefox multiqc_report.html
 **Remember `Control+c` will allow you to close firefox at the terminal when done viewing**
 
 ### Comparing the dataset
-Look through the new multiQC report to see the difference trimming has made (particularly for TBSample2 data)
+Look through the new multiQC report to see the difference trimming has made (particularly for TBsample2 data)
 ![](figures/TB_fig17.png)
 
 
-##### *Questions*
+## *Questions*
 1. Look at the Sequence Count table. Are there less reads in the trimmed datasets compared to the original data?
 2. Was a large percentage of reads removed or trimmed overall?
 3. How did trimming effect the mean sequence quality? Does the data look to be higher quality now?

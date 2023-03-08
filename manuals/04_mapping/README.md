@@ -1,4 +1,4 @@
-# Mycobacterium tuberculosis example dataset
+# *Mycobacterium tuberculosis* example dataset
 
 
 ## Table of contents
@@ -9,54 +9,20 @@
 
 ## 1. Introduction <a name="introduction"></a>
 
-The goal of this exercise is look map short reads (Illumina) to a reference genome and call variants. Our dataset are two *M. tuberculosis* samples that have been sequenced via Illumina paired-end. We will be using the trimmed reads from the previous module as input for the mapping.
+The goal of this exercise is look map short reads (Illumina) to a reference genome and call variants. Our dataset are two *M. tuberculosis* samples that have been sequenced via Illumina paired-end. We will be using the trimmed reads from the QC module as input for the mapping.
 
 ### We will
 
-- [X] Create a new `conda` environment for `snippy`
 - [X] Use `snippy` to map and call variants for each dataset
 - [x] Look at SNPs
 
 
 
 ## Map and call variants using `snippy` <a name="exercise1"></a>
-First move into the TB dataset folder:
+First make sure we are in the `TB_module` folder:
 ```bash
-cd TB_module
+cd ~/modules/TB_module
 ```
-
-#### We need to install `snippy` by creating a new conda environments
-
-Install `mamba` by using the following command:
-```bash
-conda install -y -c conda-forge mamba
-```
-`-y` : automatically proceeds with downloading packages  
-`-c conda-forge`: adds conda-forge channel
-`mamba` at the end are the names of the packages we are downloading `mamba`
-
-### If you previously installed the snippy environment please remove it here first:
-```bash
-conda remove --name snippy --all
-```
-Now we are going to use `mamba` to install `snippy`
-```bash
-mamba create --name snippy -c conda-forge -c bioconda snippy==4.6 snpeff==5.0 bcftools==1.10 vt==0.57721
-```
-`mamba` is a faster alternative to `conda` that sometimes works a bit better for some installations. It works in exactly the same way as `conda`.  
-
-`mamba create` : command that creates a new environment  
-`-c conda-forge`: adds conda-forge channel  
-`-c bioconda`: adds bioconda channel  
-`snippy==4.6 snpeff=5.0 bcftools=1.10 vt==0.57721` : installs specific packages and versions
-
-Once it has finished installing you can now activate the environment by typing:
-```bash
-conda activate snippy
-```
-
-This should do the trick, and everything should work now.
-![](figures/map_fig1.png)
 
 Check snippy is installed properly and to get an idea of how to run the program:
 ```bash
@@ -71,24 +37,23 @@ You can learn more about the pipeline here : https://github.com/tseemann/snippy
 
 Let's run snippy on the first TB sample:
 ```bash
-snippy --cpus 4 --outdir TBsample1_snippy --ref Mtb_H37Rv.gb --R1 TBsample1_1_val_1.fq.gz --R2 TBsample1_2_val_2.fq.gz --subsample 0.5
+snippy --cpus 4 --outdir TBsample1_snippy --ref Mtb_H37Rv.gb --R1 TBsample1_1_val_1.fq.gz --R2 TBsample1_2_val_2.fq.gz
 ```
-`--cpus 4` : run using 4 CPUs (the max number we have on the VMs). Default is 8.  
+`--cpus 4` : run using 4 CPUs. Default is 8.  
 `--outdir` : name the output directory  
 `--ref` : reference genome file in GenBank or fasta format  
 `--R1` : Forward read files (remember we are using the trim_galore output files)  
 `--R2` : Reverse read files (remember we are using the trim_galore output files)  
-`--subsample` : percentage to subsample reads. In this case we look at 0.5 (half) to speed things up. (You don't have to do this with your actual data).
 
 `snippy` will take a few minutes to complete. There will be quite a bit of output on the terminal -- and that is OKAY!
 
-When finished if you run:
+### When finished look at the output files:
 ```bash
 ll TBsample1_snippy
 ```
 ![](figures/map_fig3.png)
 
-### Now modify the command to run date for TBsample2.  
+## **Now modify the command to run date for TBsample2**  
 How do you need to change the above `snippy` command so that you use that data?  
 
 Set `--outdir TBsample2_snippy`. What read data (`--R1` and `--R2`) do we need to add?
@@ -126,14 +91,14 @@ Extension | Description
 
 Let's take a look at a summary file to see how many variants were called in total:
 ```bash
-cat TBSample1_snippy/snps.txt
+cat TBsample1_snippy/snps.txt
 ```
 ![](figures/map_fig5.png)
 How many variants total were called against for this sample?
 
 ### Look at the `snps.txt` for TBSample2.
 ```bash
-cat TBSample2_snippy/snps.txt
+cat TBsample2_snippy/snps.txt
 ```
 
 Which TB dataset has more variants called?
@@ -182,11 +147,27 @@ ins  | Insertion | ATT => AGTT
 del  | Deletion | ACGG => ACG
 complex | Combination of snp/mnp | ATTC => GTTA
 
+
+
 # 3. Looking for resistance mutations <a name="exercise3"></a>
 
-Let's look for a few well known resistance mutations in these datasets.
+There are several antibiotics that are used to treat TB. Treatment typically involves a combination of antibiotics, as this can help to reduce the risk of antibiotic resistance and improve treatment outcomes.
 
-#### Rifampin reseistance
+The antibiotics most commonly used to treat TB include:
+
+1. **Isoniazid (INH)**: This is a first-line antibiotic that is highly effective against M. tuberculosis. It works by inhibiting the synthesis of mycolic acids, which are essential components of the bacterial cell wall.
+
+2. **Rifampin (RIF)**: This is another first-line antibiotic that is used in combination with INH. It works by inhibiting the activity of RNA polymerase, which is required for bacterial replication.
+
+3. **Pyrazinamide (PZA)**: This is a first-line antibiotic that is used in combination with INH and RIF. It works by disrupting the bacterial cell membrane and reducing the acidity within the cell.
+
+4. **Ethambutol (EMB)**: This is a first-line antibiotic that is used in combination with INH, RIF, and PZA. It works by inhibiting the synthesis of arabinogalactan, which is another component of the bacterial cell wall.
+
+5. **Streptomycin**: This is a second-line antibiotic that is used in cases of drug-resistant TB. It works by inhibiting protein synthesis in the bacterial cell.
+
+**Let's look for a few well known resistance mutations in these datasets**
+
+### **Rifampin resistance**
 A primary drug for treating TB is rifampin. One of the main genes that has mutations that confers resistance to rifampin is rpoB. Let's take a look to see if we have any mutations in rpoB within our two samples.
 
 ```bash
@@ -194,20 +175,21 @@ grep 'rpoB' TBsample1_snippy/snps.tab
 grep 'rpoB' TBsample2_snippy/snps.tab
 ```
 `grep` is the command to search within a file  
-Here, `rpoB` after grep is the search terms and then we follow it by the file we wish to search.
+Here, we are searching for `rpoB` then we follow it by the file we wish to search.
 
 
 Does one sample have more mutations than the other?
 
-One particular mutation in rpoB that is known to confer resistance to rifampin is the S640L mutation. Does one of our samples have this mutation?
+One particular mutation in rpoB that is known to confer resistance to rifampin is the S450L mutation. Does one of our samples have this mutation?
 
-### Isoniazid resistance
+### **Isoniazid resistance**
 
 Take a look at this paper here: https://academic.oup.com/jid/article/182/6/1788/916586?login=false
 
-What gene and what mutation within that gene are typical for isoniazid resistance with TB?
+## *Questions*
+1. What gene and what mutation within that gene are typical for isoniazid resistance with TB?
 
 Use `grep` to search for this gene within the `TBsample1_snippy/snps.tab` and `TBsample2_snippy/snps.tab`
 
 
-### Based on these findings, which TB sample(s) are resistant and which are sensitive?
+2. Based on these findings, which TB sample(s) are resistant and which are sensitive?
