@@ -1,4 +1,4 @@
-
+# SARS-CoV-2 variant and lineage calling
 ## Table of contents
 1. [Introduction & Aims](#introduction)
 2. [Running Pangolin](#exercise1)

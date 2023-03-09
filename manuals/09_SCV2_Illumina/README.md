@@ -3,10 +3,10 @@
 
 ## Table of contents
 1. [Introduction & Aims](#introduction)
-2. [Install ARTIC](#exercise1)
-3. [Using `tar`](#exercise2)
-4. [Running ARTIC pipeline](#exercise3)
-5. [Looking at reads with IGV](#exercise4)
+2. [`viralrecon` samplesheet](#exercise1)
+3. [Running viralrecon pipeline](#exercise2)
+4. [Explore viralrecon output](#exercise3)
+5. [Consensus genomes](#exercise4)
 
 ## 1. Introduction <a name="introduction"></a>
 
@@ -25,7 +25,7 @@ You can learn all about the `viralrecon` pipeline here: https://nf-co.re/viralre
 - [X] Run the `viralrecon` pipeline 
 - [x] Explore the output files of the pipeline
 
-## 1. Create input samplesheet for pipeline
+## 1. Create input samplesheet for pipeline<a name="exercise1"></a>
 
 First let's make sure we are in the right folder:
 ```bash

@@ -3,23 +3,22 @@
 
 ## Table of contents
 1. [Introduction & Aims](#introduction)
-2. [Install ARTIC](#exercise1)
-3. [Using `tar`](#exercise2)
-4. [Running ARTIC pipeline](#exercise3)
-5. [Looking at reads with IGV](#exercise4)
-
+2. [Use git](#exercise1)
+3. [Map reads against reference genoe](#exercise2)
+4. [Trim amplicon primers with `ivar`](#exercise3)
+5. [Call SNPs](#exercise4)
+6. [Create consesnsus fasta genomes](#exercise4)
 ## 1. Introduction <a name="introduction"></a>
 
-In this module, we are going to work through how to map reads to the SARS-CoV-2 reference genome, call SNPs (variants) and generate consensus genomes.
+In this module, we are going to work through how to map reads to the SARS-CoV-2 reference genome, call SNPs (variants) and generate consensus genomes. This module will walk you through the individial commands utilizing a variety of tools to go from pair-end Illumina data all the way through generating a conesnsus genome.
 
+While we are focusing on SARS-CoV-2 in this module, the general workflow and tools can be utilized for many viral and bacterial pathogens.
 
-
-You can learn all about the `viralrecon` pipeline here: https://nf-co.re/viralrecon
 
 
 ### We will
 
-- [X] Use `git` to clone a repository
+- [X] Use `git` to clone a repository from GitHub
 - [X] Map reads against a reference using `BWA-MEM`
 - [x] Trim amplicon primer sequences using `ivar`
 - [x] Call variants (SNPs) using `bcftools`
@@ -197,3 +196,5 @@ Use the web version of NextClade to visualize the results:
 https://clades.nextstrain.org/
 
 Drag and drop the `combined_consensus.fasta` file and visualize the results!
+
+**Congratulations! This was quite a bit of work!**

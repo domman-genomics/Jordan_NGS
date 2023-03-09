@@ -1,4 +1,4 @@
-
+# SARS-CoV-2 ARTIC pipeline with Nanopore data
 ## Table of contents
 1. [Introduction & Aims](#introduction)
 2. [Install ARTIC](#exercise1)
@@ -158,9 +158,9 @@ Medaka models are named to indicate i) the pore type, ii) the sequencing device 
 r941_min_high_g360
 ```  
 In our case we sequenced on Minion/GridION R9.4.1 flowcell using the "high" accuracy base-calling mode and the latest version of guppy that this supports was version 3.6.0.
-
+___
 ## **! Please amend the command above and run the other two samples through the `artic minion` pipeline**
-
+___
 #### There are many output files produced by the pipeline. I will list the most important ones here, but you can find the full description of all files here : https://artic.readthedocs.io/en/latest/minion/
 
 ![](figures/sars-9.png)

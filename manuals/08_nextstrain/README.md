@@ -157,3 +157,8 @@ Once completed, let's visualize the results
 nextstrain view auspice/
 ```
 ![](./figures/Jordan_build.png)
+
+### *Questions*
+1. What do the lines connecting the geographic locations mean? How are they derived?
+2. In this example, which countries / regions have are most closely related to the Jordan sequences?
+3. What are the predominant lineages circulating?
