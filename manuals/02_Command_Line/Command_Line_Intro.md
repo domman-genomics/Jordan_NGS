@@ -118,7 +118,7 @@ and provide examples of how they can be used in bioinformatics analyses.
 ```bash
 # your first command – move to the working directory to get started!
 
-cd /home/oman_ngs/Oman_modules/Module_2_Command_Line
+cd modules/Module_2_Command_Line
 
 ```
 
@@ -595,7 +595,7 @@ $ awk '{ print $1 }' genome_2.bed | sort | uniq | less
 
 ```bash
 # First we need to go to the correct directory
-$ cd /home/oman_ngs/Oman_modules/Module_2_Command_Line/grep
+$ cd ~/modules/Module_2_Command_Line/grep
 
 ```
 
@@ -760,7 +760,7 @@ $ sed 's/^chr/chromosome/' gene_expression.bed > gene_expression_new.bed
 - Before we begin we need to change directory to the correct location.
 
 ```bash
-$ cd ~/Oman_modules/Module_2_Command_Line/awk/
+$ cd ~/modules/Module_2_Command_Line/awk/
 
 
 ```
@@ -958,142 +958,6 @@ $ while read -r chr start end name strand; do \
      - inside the while loop, there is the *“if”* command - if the conditions are TRUE, ie., the chr ==1 AND strand ==1, then we *“echo”* or print the data in the columns chr, start, end, name & strand. These were set as variables at the start of the while command
      - The *"if"* command starts with *"then"*, and finishes with *"fi"*.
 
----
-[↥ **Back to top**](#top)
-
-
-
-
-## BASH scripts <a name="scripts"></a>
-- So far, we have run single commands in the terminal.
-- However, it is often useful to run multiple commands to process data and produce output.
-- These commands can be put into a script which can be run on input data.
-- This allows for reproducibility meaning the same analysis can be run on multiple datasets in different locations.
-
-### Your first script
-- It is traditional when learning a new programming language (in this case BASH) to write a simple script which says “Hello world!”. We will do this here.
-
-```bash
-# In a terminal window, navigate to your home directory and create a directory called scripts
-$ cd
-$ mkdir scripts
-$ cd scripts
-
-# Open a text editor to create your script. Do not use a word processor. An example is gedit. If you don’t have a favourite text editor already run this.
-$ gedit &
-
-# In the editor window type ‘echo “Hello world!”’ and save the file with the name hello.sh.
-
-```
-- Congratulations! You have created your first script.
-- We will now run the script.
-
-```bash
-# First check to see whether the file in place then run it.
-$ ls hello.sh
-$ bash hello.sh
-
-```
-
----
-
-
-### Setting up a generic directory for scripts
-- It would be useful to be able to run scripts we’ve written from anywhere on the filesystem without telling Unix where the script is or that it is a BASH script.
-- To tell Unix that a script is a BASH script, edit it so the first line reads:
-
-```bash
-#!/usr/bin/env bash
-
-```
-- Next we need to make the script executable. To do this, we use the Unix command *"chmod"*
-
-```bash
-# chmod changes the permissions of the file
-$ chmod +x hello.sh
-
-```
-- The final thing we need to do is change our setup so Unix can find our scripts without explicitly being told where they are.
-- When a command is typed, Unix searches a list of directories looking for it.
-- This list is stored as an environmental variable known as the *PATH*.
-- Some of the directories in the PATH are looked at for all users but others can be set explicitly for an individual user.
-
-```bash
-# First we want to check what our PATH currently is.
-$ echo $PATH
-
-```
-- This has given us the list of directories currently used for commands.
-- You will notice that it does not include your scripts directory.
-
-```bash
-# We can modify the PATH environment variable in the current terminal
-$ export PATH=$PATH:~/scripts
-
-```
-- If you want this change to be permanent i.e. so Unix finds your scripts directory in a new terminal or after a fresh login, add the above line to a file called ~/.bashrc.
-- Each user has a .bashrc file. It stores environment variables and aliases for the individual user account.
-- On a Mac, the equivalent file is called ~/.bash_profile.
-- This file is only usually looked at when logging in or opening a new terminal.
-
-```bash
-# To check the change has worked, open a new terminal and run your script with no location set.
-$ hello.sh
-
-```
-- With this set up, to create a new script, you can copy and edit an existing script or create a new one
-
-```bash
-$ cd ~/scripts
-$ touch myscript.sh
-$ chmod +x myscript.sh
-
-```
-- myscript.sh can now be edited using a text editor.
-
----
-
-
-
-### Getting command line options and adding output text
-- Usually we want a script to read in options from the user, for example the name of an input file.
-- Inside the script, these parameters are given the names $1, $2, $3 etc.
-- We have provided a simple example in which the user provides a file name and a number.
-- The script simply prints the file name on screen together with the top few lines of the file (the number given as the second command line option).
-
-```bash
-# We can view this example using the cat commend we’ve seen earlier
-$ cd ~/Oman_modules/Module_2_Command_Line/bash_scripts/scripts
-$ cat options_example.sh
-
-```
-- Having looked at the script, run it to observe the output
-
-```bash
-$ ./options_example.sh test_file 2
-
-```
-- You will notice that, whilst the script works, is not very readable.
-     - It is better to replace $1 and $2 with meaningful variable names.
-
-```bash
-# We have provided a second version of the script which is more readable
-$ cat options_example2.sh
-
-```
-- We have set the variable filename to be $1 and the variable number_of_lines to be $2.
-- This may seem unimportant with a simple script but, as you write more complex scripts or adapt them to particular datasets, you will realise that setting meaningful variable names saves a lot of time.
-
----
-
-
-### Exercises
-1. Write a script which takes a file name from the user, if the file exists, print a human readable message telling the user how many lines the file has.
-2. Navigate to the base Module_2_Linux_scripting directory. Use a loop to run the script written in exercise 1 on the files in the loop_files subdirectory.
-3. Write a script that takes a GFF filename as input. Make the script produce a summary of various properties of the file.
-     - An example input file is provided called bash_scripts/exercise_3.gff.
-     - Use your imagination as to what you want to summarise.
-     - You may want to look back at the awk section of the manual for inspiration.
 
 ---
 [↥ **Back to top**](#top)
