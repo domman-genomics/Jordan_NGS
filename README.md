@@ -4,7 +4,7 @@
 This course will provide training in bioinformatics protocols for pathogen genomics, with a focus on SARS-CoV-2.
 
 ## Instructor
-- Daryl Domman: domman.genomics@gmail.com
+- Daryl Domman: [domman.genomics@gmail.com](domman.genomics@gmail.com)
 
 
 ## Timetable - all times local Jordan time (GMT+3)
@@ -12,10 +12,10 @@ This course will provide training in bioinformatics protocols for pathogen genom
 
 - Module 1 : Introduction to NGS Data and File types 
   - [Online Manual](manuals/01_Intro_to_NGS/module_Intro.md)
-  - [Lecture Slides](lectures/3_Intro_to_NGS_Data.pdf)
+  - [Lecture Slides](lectures/01_Domman_Intro_to_NGS.pdf)
 - Module 2 : Introduction to working on the command line and virtual machine 
   - [Online Manual](manuals/02_Command_Line/Command_Line_Intro.md)
-  - [Lecture Slides](lectures/4_Command_line_and_VM.pdf)
+  - [Lecture Slides](lectures/2_Command_line.pdf)
 - Module 3 : Illumina data QC 
   - [Lecture Slides](lectures/6_Data_QC.pdf)
   - [Online Manual](manuals/03_QC_and_Mapping/README.md)
