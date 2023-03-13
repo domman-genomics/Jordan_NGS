@@ -10,17 +10,17 @@ This course will provide training in bioinformatics protocols for pathogen genom
 ## Timetable - all times local Jordan time (GMT+3)
 ### Overview
 
-- Module 1 : Introduction to NGS Data and File types 
+- Module 1 : Introduction to NGS Data and File types
+  - [Lecture Slides](lectures/01_Domman_Intro_to_NGS.pdf) 
   - [Online Manual](manuals/01_Intro_to_NGS/module_Intro.md)
-  - [Lecture Slides](lectures/01_Domman_Intro_to_NGS.pdf)
-- Module 2 : Introduction to working on the command line and virtual machine 
-  - [Online Manual](manuals/02_Command_Line/Command_Line_Intro.md)
+- Module 2 : Introduction to working on the command line and virtual machine
   - [Lecture Slides](lectures/2_Command_line.pdf)
+  - [Online Manual](manuals/02_Command_Line/Command_Line_Intro.md)
 - Module 3 : Illumina data QC 
-  - [Lecture Slides](lectures/6_Data_QC.pdf)
+  - [Lecture Slides](lectures/03_Data_QC.pdf)
   - [Online Manual](manuals/03_QC_and_Mapping/README.md)
 - Module 4 : Mapping to a reference genome 
-  - [Lecture Slides](lectures/8_Mapping.pdf)
+  - [Lecture Slides](lectures/04_Mapping.pdf)
   - [Online Manual](manuals/04_mapping/README.md)
 - Module 5 : Bacterial Genome Assembly and Annotation 
   - [Online Manual](manuals/05_assembly/README.md)
