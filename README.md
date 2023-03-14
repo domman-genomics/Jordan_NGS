@@ -22,10 +22,11 @@ This course will provide training in bioinformatics protocols for pathogen genom
 - Module 4 : Mapping to a reference genome 
   - [Lecture Slides](lectures/04_Mapping.pdf)
   - [Online Manual](manuals/04_mapping/README.md)
-- Module 5 : Bacterial Genome Assembly and Annotation 
+- Module 5 : Bacterial Genome Assembly and Annotation
+  - [Lecture Slides](lectures/05_Assembly.pdf) 
   - [Online Manual](manuals/05_assembly/README.md)
 - Module 6 : SARS-CoV-2 Illumina 
-  - [Lecture Slides](lectures/12_SARS-CoV-2.pdf)
+  - [Lecture Slides](lectures/06_Illumina_SCV2.pdf)
   - [Online Manual](manuals/10_SCV2_map/README.md)
 - Module 7 : SARS-CoV-2 Nextflow 
   - [Lecture Slides](lectures/12_SARS-CoV-2.pdf)
