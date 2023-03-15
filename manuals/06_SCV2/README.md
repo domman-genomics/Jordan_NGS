@@ -75,11 +75,6 @@ You should see the `barcode01` folder now.
  After, you will have the following three barcode folders:
  ![](figures/sars-7.png)
 
-#### After you have unzipped all of the folders, you are free to delete the .gz files. We are running tight on space on the VMs so this will help!
-
-```bash
-rm *.gz
-```
 
 ## 3. ARTIC bioinformatics workflow<a name="exercise3"></a>:
 
