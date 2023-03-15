@@ -29,7 +29,7 @@ This course will provide training in bioinformatics protocols for pathogen genom
   - [Lecture Slides](lectures/06_Illumina_SCV2.pdf)
   - [Online Manual](manuals/10_SCV2_map/README.md)
 - Module 7 : SARS-CoV-2 Nextflow 
-  - [Lecture Slides](lectures/12_SARS-CoV-2.pdf)
+  - [Lecture Slides](lectures/07_Illumina_nextflow.pdf)
   - [Online Manual](manuals/09_SCV2_Illumina/README.md)
 - Module 8 : SARS-CoV-2 Nanopore 
   - [Lecture Slides](lectures/12_SARS-CoV-2.pdf)
