@@ -38,7 +38,7 @@ This course will provide training in bioinformatics protocols for pathogen genom
   - [Lecture Slides](lectures/14_Pango_Phylo.pdf)   
   - [Online Manual](manuals/07_pango_phylo/README.md)
 - Module 10 : Nextstrain 
-  - [Lecture Slides](lectures/12_SARS-CoV-2.pdf)
+  - [Lecture Slides](lectures/10_Nextstrain.pdf)
   - [Online Manual](manuals/08_nextstrain/README.md)
 
 ## Bioinformatics Course Manual
