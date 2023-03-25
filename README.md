@@ -32,10 +32,10 @@ This course will provide training in bioinformatics protocols for pathogen genom
   - [Lecture Slides](lectures/07_Illumina_nextflow.pdf)
   - [Online Manual](manuals/09_SCV2_Illumina/README.md)
 - Module 8 : SARS-CoV-2 Nanopore 
-  - [Lecture Slides](lectures/12_SARS-CoV-2.pdf)
+  - [Lecture Slides](lectures/08_SARS-CoV-2_nanopore.pdf)
   - [Online Manual](manuals/06_SCV2/README.md)
 - Module 9 : SARS-CoV-2 lineage calling and phylogeny 
-  - [Lecture Slides](lectures/14_Pango_Phylo.pdf)   
+  - [Lecture Slides](lectures/09_Lineage_Phylo.pdf)   
   - [Online Manual](manuals/07_pango_phylo/README.md)
 - Module 10 : Nextstrain 
   - [Lecture Slides](lectures/10_Nextstrain.pdf)
